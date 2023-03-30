@@ -1,5 +1,6 @@
 @php
 $currentUrl = \Route::currentRouteName();
+$module_name = (!empty($module_name) ? $module_name : '' );
 @endphp
 <div class="app-menu navbar-menu">
             <!-- LOGO -->
@@ -129,14 +130,14 @@ $currentUrl = \Route::currentRouteName();
                             <a class="nav-link menu-link" href="#sidebarWorkReport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarWorkReport">
                                 <i class="ri-pages-line"></i> <span data-key="t-pages">Work Report</span>
                             </a>
-                            <div class="collapse menu-dropdown {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show' || $currentUrl == 'admin.permissions.index' || $currentUrl == 'admin.permissions.edit' || $currentUrl == 'admin.permissions.create') ? 'show' : '' }}" id="sidebarWorkReport">
+                            <div class="collapse menu-dropdown {{( $module_name == 'plan_info') ? 'show' : '' }}" id="sidebarWorkReport">
                                 <ul class="nav nav-sm flex-column">
 
                                     <li class="nav-item">
                                         <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> User List </a>
                                     </li>
 									<li class="nav-item">
-                                        <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> Plan List </a>
+                                        <a href="{{route('admin.plan.index')}}" class="nav-link {{($module_name == 'plan_info' ) ? 'active' : '' }}" data-key="t-crm"> Plan List </a>
                                     </li>
 									<li class="nav-item">
                                         <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> Data List </a>

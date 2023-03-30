@@ -65,7 +65,7 @@ Route::group(['middleware' => ['XSS']] ,function() {
         Route::get('change-password', [DashboardController::class,'changePassword'])->name('changePassword');
         Route::post('change-password', [DashboardController::class,'changePasswordPost'])->name('changePasswordPost');	
     	
-	Route::resource('admin', '\App\Http\Controllers\Admin\AdminController');
+		Route::resource('admin', '\App\Http\Controllers\Admin\AdminController');
         Route::resource('supports', '\App\Http\Controllers\Admin\SupportController');  
         Route::resource('admin-agents', '\App\Http\Controllers\Admin\AdminAgentController'); 
         Route::resource('admin-agentreport', '\App\Http\Controllers\Admin\AGGREMENTREPORTController');  
@@ -73,15 +73,7 @@ Route::group(['middleware' => ['XSS']] ,function() {
         Route::get('approved',[AGGREMENTREPORTController::class,'approved'])->name('approved'); 
         Route::get('reject',[AGGREMENTREPORTController::class,'reject'])->name('reject'); 
                 
-		//Route::resource('publications', '\App\Http\Controllers\Admin\PublicationsController');
-		//Route::post('publications/storeMedia', [PublicationsController::class,'storeMedia'])->name('publications.storeMedia');
-		
-		//Route::resource('media-content', '\App\Http\Controllers\Admin\MediaContentController');
-		//Route::post('media-content/storeMedia', [MediaContentController::class,'storeMedia'])->name('media-content.storeMedia');
-		
-
-		//Route::resource('notice-board', '\App\Http\Controllers\Admin\NoticeBoardController');
-		//Route::post('notice-board/storeMedia', [NoticeBoardController::class,'storeMedia'])->name('notice-board.storeMedia');
+		Route::resource('plan', '\App\Http\Controllers\Admin\PlanController'); 
 		
 		Route::resource('category', '\App\Http\Controllers\master\CategoryController');
 		
