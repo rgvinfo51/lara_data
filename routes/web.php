@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\UserController as UserController;
 use App\Http\Controllers\Admin\PublicationsController;
 use App\Http\Controllers\Admin\MediaContentController;
 use App\Http\Controllers\Admin\NoticeBoardController;
+use App\Http\Controllers\Admin\AGGREMENTREPORTController;
 
 Route::get('/view-optimize', function() {
     Artisan::call('optimize:clear');
@@ -66,7 +67,11 @@ Route::group(['middleware' => ['XSS']] ,function() {
     	
 	Route::resource('admin', '\App\Http\Controllers\Admin\AdminController');
         Route::resource('supports', '\App\Http\Controllers\Admin\SupportController');  
-        Route::resource('admin-agents', '\App\Http\Controllers\Admin\AdminAgentController');  
+        Route::resource('admin-agents', '\App\Http\Controllers\Admin\AdminAgentController'); 
+        Route::resource('admin-agentreport', '\App\Http\Controllers\Admin\AGGREMENTREPORTController');  
+        Route::get('pendinglist',[AGGREMENTREPORTController::class,'pendinglist'])->name('pendinglist'); 
+        Route::get('approved',[AGGREMENTREPORTController::class,'approved'])->name('approved'); 
+        Route::get('reject',[AGGREMENTREPORTController::class,'reject'])->name('reject'); 
                 
 		//Route::resource('publications', '\App\Http\Controllers\Admin\PublicationsController');
 		//Route::post('publications/storeMedia', [PublicationsController::class,'storeMedia'])->name('publications.storeMedia');

@@ -109,17 +109,17 @@ $currentUrl = \Route::currentRouteName();
                             <a class="nav-link menu-link" href="#sidebarAggrement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAggrement">
                                 <i class="ri-pages-line"></i> <span data-key="t-pages">Aggrement Report</span>
                             </a>
-                            <div class="collapse menu-dropdown {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show' || $currentUrl == 'admin.permissions.index' || $currentUrl == 'admin.permissions.edit' || $currentUrl == 'admin.permissions.create') ? 'show' : '' }}" id="sidebarAggrement">
+                            <div class="collapse menu-dropdown"  id="sidebarAggrement">
                                 <ul class="nav nav-sm flex-column">
 
                                     <li class="nav-item">
-                                        <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> Pending List </a>
+                                        <a href="{{ route('admin.pendinglist')}} " class="nav-link" data-key="t-crm"> Pending List </a>
                                     </li>
 									<li class="nav-item">
-                                        <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> Approved List </a>
+                                        <a href="{{ route('admin.approved')}} " class="nav-link" data-key="t-crm"> Approved List </a>
                                     </li>
 									<li class="nav-item">
-                                        <a href="{{route('admin.category.index')}}" class="nav-link {{($currentUrl == 'admin.category.index' || $currentUrl == 'admin.category.edit' || $currentUrl == 'admin.category.create' || $currentUrl == 'admin.category.show') ? 'active' : '' }}" data-key="t-crm"> Reject List </a>
+                                        <a href="{{ route('admin.reject')}} " class="nav-link"   data-key="t-crm"> Reject List </a>
                                     </li>
 									 
                                 </ul>
