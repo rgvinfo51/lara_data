@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'All Category')
+@section('title', 'All Plan')
  
 @section('content')
 <div class="container-fluid">
@@ -8,11 +8,11 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-sm-flex align-items-center justify-content-between">
-				<h4 class="mb-sm-0">Category Management</h4>
+				<h4 class="mb-sm-0">Plan Management</h4>
 
 				<div class="page-title-right">
-				 @can('role_create')
-					<a class="btn btn-success" href="{{ route('admin.category.create') }}"> <i class="ri-add-line align-bottom me-1"></i>New category</a>
+				 @can('plan_create')
+					<a class="btn btn-success" href="{{ route('admin.plan.create') }}"> <i class="ri-add-line align-bottom me-1"></i>New Plan</a>
 					 @endcan
 				</div>
 
@@ -28,41 +28,53 @@
 				<div class="live-preview">
 				 
 					<div class="row gy-4">
-					 <table class="table table-bordered">
+					<div class="table-responsive">
+					 <table id="example" class="table align-middle table-nowrap">
+					  <thead>
 					  <tr>
 						 <th>No</th>
-						 <th>Name</th>
+						 <th>Plan Name</th>
+						 <th>Plan Duration</th>
+						 <th>Total Forms</th>
+						 <th>Min Accuracy</th>
+						 <th>Rate pr form</th>
 						 <th>Status</th>
-						 <th width="280px">Action</th>
+						 <th>Action</th>
 					  </tr>
-						@foreach ($data as $key => $category)
+					    </thead>
+						 <tbody>
+						@foreach ($list as $key => $value)
 						<tr>
 							<td>{{ ++$i }}</td>
-							<td>{{ $category->name }}</td>
+							<td>{{ $value->plan_name }}</td>
+							<td>{{ $value->plan_duration }}</td>
+							<td>{{ $value->plan_total_forms }}</td>
+							<td>{{ $value->plan_min_accuracy }}</td>
+							<td>{{ $value->plan_rate_per_form }}</td>
 							<td>
-								@if($category->status == 1) 
+								@if($value->status == 0) 
 									<span class="badge badge-soft-success">Active</span>
 								@else
 									<span class="badge badge-soft-danger">Inactive</span>
 								@endif
 								</td>
 							<td>
-								<!-- <a class="btn btn-info_ btn-icon waves-effect waves-light" href="{{ route('admin.category.show',$category->id) }}"><i class="ri-eye-fill align-bottom "></i></a> -->
-								@can('role_edit')
-									 <a class="btn btn-primary_ btn-icon waves-effect waves-light" href="{{ route('admin.category.edit',$category->id) }}"><i class="ri-pencil-fill align-bottom"></i></a> 
+								@can('plan_edit')
+									 <a class="btn btn-primary_ btn-icon waves-effect waves-light" href="{{ route('admin.plan.edit',$value->id) }}"><i class="ri-pencil-fill align-bottom"></i></a> 
 								@endcan
-								@can('category-delete')								
-								<!--	{!! Form::open(['method' => 'DELETE','route' => ['admin.roles.destroy', $role->id],'style'=>'display:inline']) !!}
+								@can('plan_delete')								
+								 	{!! Form::open(['method' => 'DELETE','route' => ['admin.plan.destroy', $value->id],'style'=>'display:inline']) !!}
 										{!! Form::button('<i class="ri-delete-bin-5-line"></i>', ['type' => 'submit','class' => 'btn btn-danger_ btn-icon waves-effect waves-light']) !!}
-									{!! Form::close() !!} -->
+									{!! Form::close() !!}  
 								@endcan
 							</td>
 						</tr>
 						@endforeach
+						</tbody>
 					</table>
+					</div>
 
-
-					{!! $data->render() !!}
+					{!! $list->render() !!}
 						 
 					</div>
 					 
@@ -75,3 +87,18 @@
 </div>
  
 @endsection
+
+@section('script')
+ <script>
+     $(document).ready(function () {
+         $('#example').DataTable({
+			 paging: false,
+			 info: false,
+		 });
+     });
+ </script>
+@endsection
+ 
+
+ 
+ 

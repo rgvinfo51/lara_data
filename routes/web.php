@@ -74,6 +74,8 @@ Route::group(['middleware' => ['XSS']] ,function() {
         Route::get('reject',[AGGREMENTREPORTController::class,'reject'])->name('reject'); 
                 
 		Route::resource('plan', '\App\Http\Controllers\Admin\PlanController'); 
+		Route::resource('user', '\App\Http\Controllers\Admin\UserController'); 
+		Route::resource('datalist', '\App\Http\Controllers\Admin\DatalistController'); 
 		
 		Route::resource('category', '\App\Http\Controllers\master\CategoryController');
 		

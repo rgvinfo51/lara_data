@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+	public function __construct()
+    {
+        // Page Title
+        $this->module_title = 'User Detail';
+        // module name
+        $this->module_name = 'user';
+		$this->model_name = 'App\Models\User';
+     
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        abort_unless(\Gate::allows($this->module_name.'_list'), 403);
+		$module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $list=Plan::where('status',0)->paginate(10);   		
+        return view("admin.plan.index",compact('list',"module_title", "module_name"))
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**

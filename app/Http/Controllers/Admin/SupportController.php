@@ -11,7 +11,7 @@ use App\Mail\WelcomeMail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Hash;
 use Auth;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Role;
 use App\Models\Plan; 
 use DB;
@@ -21,7 +21,12 @@ class SupportController extends Controller
 	
 	public function __construct()
     {
-        //$this->middleware('isBusiness');		 
+        // Page Title
+        $this->module_title = 'Support List';
+        // module name
+        $this->module_name = 'support';
+		$this->model_name = 'App\Models\Datalist';
+     
     }
      /**
      * Display a listing of the resource.
@@ -30,8 +35,8 @@ class SupportController extends Controller
      */
     public function index(Request $request)
     {
-		abort_unless(\Gate::allows('user_access'), 403);
-		$data = Admin::where('type','=',3)->orderBy('id','DESC')->paginate(10);
+		abort_unless(\Gate::allows($this->module_name.'_list'), 403);
+		$data = User::where('type','=',3)->orderBy('id','DESC')->paginate(10);
 		return view('admin.supports.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
@@ -44,8 +49,8 @@ class SupportController extends Controller
      */
     public function create()	
     {		
-			abort_unless(\Gate::allows('user_create'), 403);
-			$users = Admin::get();	 
+			abort_unless(\Gate::allows($this->module_name.'_create'), 403);
+			$users = User::get();	 
 			$roles = Role::whereNotIn('title',['Super Admin'])->get();		 
 			$plans = Plan::all();
 			
@@ -62,7 +67,7 @@ class SupportController extends Controller
     public function store(Request $request)
     {
 	 
-		abort_unless(\Gate::allows('user_create'), 403);
+		abort_unless(\Gate::allows($this->module_name.'_create'), 403);
 		try{
 		 //pr($request->all());
 			$this->validate($request, [ 
@@ -88,7 +93,7 @@ class SupportController extends Controller
 					'token' => random_string(45),
 				);
 		    
-			$user = Admin::create($insertData);
+			$user = User::create($insertData);
 			 $user->roles()->attach(3);
 			 
 			/* $emailData = ([
@@ -128,14 +133,7 @@ class SupportController extends Controller
      */
     public function show($id)
     {
-		abort_unless(\Gate::allows('user_show'), 403);
-        $user = Admin::find($id);
-		$states = getState();
-		$roles = Role::whereNotIn('name',['Super Admin'])->pluck('name','name')->all();
-
-		$userRole = $user->roles->pluck('name','name')->all();
-		$application_modules = ApplicationModulesMaster::all();
-        return view('admin.supports.show',compact('user','roles','userRole','application_modules','states'));
+		 
     }  
 
 
@@ -147,9 +145,9 @@ class SupportController extends Controller
      */
     public function edit($id)
     {
-		abort_unless(\Gate::allows('user_edit'), 403);
-        $user = Admin::find($id);
-        $users = Admin::get();
+		abort_unless(\Gate::allows($this->module_name.'_edit'), 403);
+        $user = User::find($id);
+        $users = User::get();
         $roles = Role::whereNotIn('title',['Super Admin'])->get();
         
         return view('admin.supports.edit',compact('user','users','roles'));
@@ -165,27 +163,25 @@ class SupportController extends Controller
      */
     public function update(Request $request, $id)
     {
-		abort_unless(\Gate::allows('user_edit'), 403);
+		abort_unless(\Gate::allows($this->module_name.'_edit'), 403);
+		
 		try{
 				$this->validate($request, [				  
 					'company_name' => 'required',
-					'admin_email' => 'required|unique:lara_admin,admin_email,'.$id,
+					'admin_email' => 'required|unique:users,admin_email,'.$id,
 					'contact' => 'required',					 
 					'userStatus' => 'required', 					 
 					
-                ]);
+                ]);	
 				
-				 
-
 				$updateData = array(					 
 					'company_name' => $request->company_name,
 					'admin_email' => $request->admin_email,					 
 					'contact' => $request->contact,	
-					'status' => $request->userStatus,
-					 
+					'status' => $request->userStatus,				 
 					 
 				);
-				$user = Admin::find($id);
+				$user = User::find($id);
 				$user->update($updateData);
                 //DB::table('role_user')->where('user_id',$id)->delete();
                 //$user->roles()->attach($request->user_type);
@@ -215,8 +211,8 @@ class SupportController extends Controller
      */
     public function destroy($id)
     {
-		abort_unless(\Gate::allows('user_delete'), 403);
-        Admin::find($id)->delete();
+		abort_unless(\Gate::allows($this->module_name.'_delete'), 403);
+        User::find($id)->delete();
         return redirect()->route('admin.supports.index')
                         ->with('success','Support deleted successfully');
     }

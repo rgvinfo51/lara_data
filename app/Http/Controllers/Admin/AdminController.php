@@ -11,7 +11,7 @@ use App\Mail\WelcomeMail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Hash;
 use Auth;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Role;
 use App\Models\Plan; 
 use DB;
@@ -31,7 +31,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 		abort_unless(\Gate::allows('user_access'), 403);
-		$data = Admin::where('type','=',2)->orderBy('id','DESC')->paginate(10);
+		$data = User::where('type','=',2)->orderBy('id','DESC')->paginate(10);
 		return view('admin.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function create()	
     {		
 			abort_unless(\Gate::allows('user_create'), 403);
-			$users = Admin::get();	 
+			$users = User::get();	 
 			$roles = Role::whereNotIn('title',['Super Admin'])->get();		 
 			$plans = Plan::all();
 			
@@ -155,7 +155,7 @@ class AdminController extends Controller
 					'token' => random_string(45),
 				);
 		    
-			$user = Admin::create($insertData);
+			$user = User::create($insertData);
 			 $user->roles()->attach(2);
 			 
 			/* $emailData = ([
@@ -196,7 +196,7 @@ class AdminController extends Controller
     public function show($id)
     {
 		abort_unless(\Gate::allows('user_show'), 403);
-        $user = Admin::find($id);
+        $user = User::find($id);
 		$states = getState();
 		$roles = Role::whereNotIn('name',['Super Admin'])->pluck('name','name')->all();
 
@@ -215,8 +215,8 @@ class AdminController extends Controller
     public function edit($id)
     {
 		abort_unless(\Gate::allows('user_edit'), 403);
-        $user = Admin::find($id);
-        $users = Admin::get();
+        $user = User::find($id);
+        $users = User::get();
         $roles = Role::whereNotIn('title',['Super Admin'])->get();
         
         return view('admin.users.edit',compact('user','users','roles'));
@@ -325,7 +325,7 @@ class AdminController extends Controller
 					'company_stamp' => $company_stamp,
 					 
 				);
-				$user = Admin::find($id);
+				$user = User::find($id);
 				$user->update($updateData);
                 //DB::table('role_user')->where('user_id',$id)->delete();
                 //$user->roles()->attach($request->user_type);
@@ -356,7 +356,7 @@ class AdminController extends Controller
     public function destroy($id)
     {
 		abort_unless(\Gate::allows('user_delete'), 403);
-        Admin::find($id)->delete();
+        User::find($id)->delete();
         return redirect()->route('admin.users.index')
                         ->with('success','Admin deleted successfully');
     }

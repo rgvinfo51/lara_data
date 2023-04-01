@@ -119,7 +119,7 @@ table.dataTable.no-footer {
     <!-- Dashboard init -->
     <script src="{{ asset('public/assets/js/pages/dashboard-crm.init.js')}}"></script>
 
-{--	
+		{{--	
 	<!-- dropzone min -->
     <script src="{{ asset('public/assets/libs/dropzone/dropzone-min.js')}}"></script>
     <!-- filepond js -->
@@ -134,10 +134,11 @@ table.dataTable.no-footer {
     <script src="{{ asset('public/assets/js/app.js')}}"></script>
 	<script src="{{ asset('public/assets/js/custom.js')}}"></script>
 	<script src="{{ asset('public/assets/scripts/choices.min.js')}}"></script>
-	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	
 	 <script src="{{ asset('public/backend/js/sweetalert.js')}}"></script>
 
 	@yield('script')
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 	@include('sweetalert::alert')
 	
 </body> 

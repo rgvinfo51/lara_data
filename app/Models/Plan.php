@@ -18,21 +18,12 @@ class Plan extends Model
         'plan_duration',
 		'plan_total_forms',
 		'plan_min_accuracy',
-		'plan_rate_per_form',		
+		'plan_rate_per_form',	
+		'status',
         'created_at',
         'updated_at',          
     ];
 	
-	
-/*	public function categoryMedia()
-	{	   
-		return $this->hasMany(MediaContent::class,'cat_id','id')->latest('id')->limit(4);
-	}
-	
-	public function categoryPublication()
-	{	   
-		return $this->hasMany(Publications::class,'cat_id','id');
-	}
-*/
+	 
      
 }

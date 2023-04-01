@@ -9,11 +9,11 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box d-sm-flex align-items-center justify-content-between">
-				<h4 class="mb-sm-0">Edit User</h4>
+				<h4 class="mb-sm-0">Edit Support</h4>
 
 				<div class="page-title-right">
 					<ol class="breadcrumb m-0">
-						<li class="breadcrumb-item"><a href="{{ route('admin.supports.index') }}">User</a></li>
+						<li class="breadcrumb-item"><a href="{{ route('admin.supports.index') }}">Support</a></li>
 						<li class="breadcrumb-item active">Edit Support</li>
 					</ol>
 				</div>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<!-- end page title -->
-	@can('user_edit')
+	@can('support_edit')
 	{!! Form::open(array('route' => ['admin.supports.update', $user->id],'method'=>'PATCH','id' => 'userFrm','files' => 'true','enctype'=>'multipart/form-data')) !!}
 	@endcan
  <div class="row">
@@ -40,7 +40,7 @@
 			@endif
 
 			<div class="card-header align-items-center d-flex">
-				<h4 class="card-title mb-0 flex-grow-1">User Detail  </h4>
+				<h4 class="card-title mb-0 flex-grow-1">Support Detail  </h4>
 
 			</div>
 
@@ -93,14 +93,14 @@
 			</div>
 		</div>
 	</div>
-	@can('user_edit')
+	@can('support_edit')
 	<div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		<button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
 	</div>
 	@endcan
 </div>
 
-@can('user_edit')
+@can('support_edit')
 {!! Form::close() !!}
 
 @endcan
@@ -110,36 +110,9 @@
 </div>
 @endsection
 @section('script')
-<script type="text/javascript" src="{{ asset('public/backend/js/sha.js') }}"></script>
+ 
 <script>
-@php $salt = rand('1000','9999');
-session(['salt' => $salt]);
-@endphp
- $(document).on('submit','#userFrm',function(){
-
-
-		var salt = '{{ $salt }}';
-		var secret = $('#passwordinput').val();
-		var shaObj = new jsSHA("SHA-256", "TEXT");
-		shaObj.update(secret);
-		var hashPass = shaObj.getHash("HEX");
-		$('#password-input').val(hashPass);
-
-	    /* var salt = '{{ $salt }}';
-		var secret = $('#passwordinput').val();
-		var shaObj = new jsSHA("SHA-256", "TEXT");
-	    shaObj.update(secret);
-	    var hashPass = shaObj.getHash("HEX");
-		var shaObj1 = new jsSHA("SHA-256", "TEXT");
-		shaObj1.update(hashPass+salt);
-		var hashSalt = shaObj1.getHash("HEX");
-		$('#password-input').val(hashSalt); */
-});
-
-
-
-
-
+ 
 </script>
 
 @endsection

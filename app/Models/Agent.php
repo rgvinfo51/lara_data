@@ -16,7 +16,7 @@ class Agent extends Authenticatable
     
         public function parentUser()
 	{	   
-		return $this->hasOne(Admin::class,'id','admin_id');
+		return $this->hasOne(User::class,'id','admin_id');
 	}
 
       
